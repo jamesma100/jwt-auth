@@ -12,6 +12,15 @@ const jwtCheck = expressjwt({
 
 app.use(bodyParser.json());
 
+
+app.get("/asset/secret", jwtCheck, (req, res) => {
+        res.status(200).send("For authorized users");
+});
+
+app.get("/asset", (req, res) => {
+        res.status(200).send("Everybody can see this");
+});
+
 app.get("*", (req, res) => {
 	res.status(404).send("Route not defined");
 });
@@ -20,10 +29,3 @@ app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}.`);
 });
 
-app.get("/asset", (req, res) => {
-	res.status(200).send("Everybody can see this");
-});
-
-app.get("/asset/secret", jwtCheck, (req, res) => {
-	res.status(200).send("For authorized users");
-});
